@@ -1,11 +1,11 @@
-from fastapi import APIRouter, UploadFile, HTTPException
-from src.ocr_service.tesseract_handler import TesseractHandler
+from fastapi import APIRouter, UploadFile, File, HTTPException
+from ocr_service.tesseract_handler import TesseractHandler
 
 router = APIRouter()
 ocr_handler = TesseractHandler()
 
 @router.post("/ocr")
-async def perform_ocr(file: UploadFile):
+async def perform_ocr(file: UploadFile = File(...)):
     if not (file.content_type.startswith('image/') or file.content_type == 'application/pdf'):
         raise HTTPException(
             status_code=400, 

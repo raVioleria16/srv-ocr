@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.routes.api import router
+from routes.api import router
 
 app = FastAPI(title="OCR Service")
 app.include_router(router, prefix="/api/v1")
