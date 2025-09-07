@@ -3,6 +3,7 @@ version: '3.8'
 services:
   ocr-service:
     build: .
+    container_name: srv-ocr
     ports:
       - "6000:6000"
     volumes:
@@ -10,3 +11,8 @@ services:
     restart: unless-stopped
     environment:
       - PYTHONUNBUFFERED=1
+    networks:
+      - internal-network
+networks:
+  internal-network:
+    external: true
