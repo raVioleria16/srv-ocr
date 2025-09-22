@@ -1,0 +1,4 @@
+name: "srv-ocr"
+providers_config:
+  local:
+    tesseract: "--oem 3 --psm 6"
