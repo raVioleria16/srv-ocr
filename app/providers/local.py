@@ -1,11 +1,15 @@
+import io
+
 import pytesseract
 from PIL import Image
-import io
-from pdf2image import convert_from_bytes
 from PyPDF2 import PdfReader
-from typing import List, Optional
+from pdf2image import convert_from_bytes
 
-class TesseractHandler:
+from providers.base_provider import Provider
+
+
+class LocalProvider(Provider):
+
     def __init__(self):
         self.tesseract_config = r'--oem 3 --psm 6'
 
@@ -17,12 +21,12 @@ class TesseractHandler:
         except Exception as e:
             raise Exception(f"OCR processing error: {str(e)}")
 
-    def process_pdf(self, pdf_bytes: bytes) -> List[str]:
+    def process_pdf(self, pdf_bytes: bytes) -> list[str]:
         try:
             # First try to extract text directly from PDF
             pdf_reader = PdfReader(io.BytesIO(pdf_bytes))
             text_results = []
-            
+
             for page in pdf_reader.pages:
                 text = page.extract_text()
                 if text.strip():  # If we got meaningful text

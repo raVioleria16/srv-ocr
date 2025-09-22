@@ -1,0 +1,4 @@
+service_name: ocr
+ext_srv:
+  srv_configuration_manager:
+    provider: local

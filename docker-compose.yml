@@ -1,16 +1,19 @@
-version: '3.8'
-
 services:
-  ocr-service:
-    build: .
-    container_name: srv-ocr
+  app:
+    build:
+      context: .
+      args:
+        - PORT=${PORT}
+    container_name: ${PRJ_NAME}
+    image: ${PRJ_NAME}-image
     ports:
-      - "6000:6000"
+      - "$PORT:$PORT"
     volumes:
-      - ./src:/app
-    restart: unless-stopped
+      - ./app:/app
     environment:
-      - PYTHONUNBUFFERED=1
+      - PRJ_NAME
+      - CONFIG_DIR
+      - PORT
     networks:
       - internal-network
 networks:

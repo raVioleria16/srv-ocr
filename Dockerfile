@@ -1,3 +1,4 @@
+ARG PORT
 FROM python:3.9-slim
 
 # Install system dependencies
@@ -16,11 +17,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 COPY requirements.txt .
+RUN apt-get update && apt-get install -y git
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia TUTTO il contenuto nella cartella /app
-COPY . /app
+COPY app/* .
 
-EXPOSE 6000
-
-CMD ["python", "app.py"]
+CMD uvicorn app:app --host 0.0.0.0 --port ${PORT}
