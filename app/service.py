@@ -18,7 +18,7 @@ class Service(BaseService):
 
         self.providers = {
             ProviderType.LOCAL: LocalProvider(provider_config=self.config.providers_config.local,
-                                              paired_services=self.config.paired_services)
+                                              external_services=self.config.external_services)
         }
 
 

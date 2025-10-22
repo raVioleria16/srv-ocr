@@ -8,14 +8,14 @@ from starlette import status
 
 from rv16_lib.exceptions import RV16Exception
 
-from config import PairedServices
+from config import ExternalServices
 from providers.base_provider import Provider
 from providers.entities import LocalProviderConfig
 
 
 class LocalProvider(Provider):
 
-    def __init__(self, provider_config: LocalProviderConfig, paired_services: PairedServices):
+    def __init__(self, provider_config: LocalProviderConfig, external_services: ExternalServices):
         self.tesseract_config = provider_config.tesseract
 
     def process_image(self, image_bytes: bytes) -> str:

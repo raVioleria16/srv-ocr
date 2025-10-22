@@ -6,7 +6,6 @@ from rv16_lib.exceptions import RV16Exception
 from starlette import status
 from starlette.responses import JSONResponse
 
-from rv16_lib.srv_ocr.entities import OCRRequest
 
 from service import service as srv
 

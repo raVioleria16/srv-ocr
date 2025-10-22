@@ -3,8 +3,10 @@ from pydantic import BaseModel
 
 from providers.entities import LocalProviderConfig
 
+class InternalServices(BaseModel):
+    pass
 
-class PairedServices(BaseModel):    # it should be a dict[str, ExtSrvConfig], but srv-ocr has no PairedServices
+class ExternalServices(BaseModel):
     pass
 
 class ProvidersConfig(BaseModel):
@@ -13,4 +15,5 @@ class ProvidersConfig(BaseModel):
 class SrvConfig(BaseModel):
     name: str
     providers_config: ProvidersConfig
-    paired_services: Optional[PairedServices] = None
+    internal_services: Optional[InternalServices] = None
+    external_services: Optional[ExternalServices] = None
