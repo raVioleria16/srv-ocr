@@ -1,6 +1,7 @@
 from abc import abstractmethod
 
 from rv16_lib.architecture.base_provider import BaseProvider
+from rv16_lib.srv_ocr.entities import OCRServiceParams
 
 
 class Provider(BaseProvider):
@@ -17,5 +18,9 @@ class Provider(BaseProvider):
         pass
 
     @abstractmethod
-    def process_file(self, file_bytes: bytes, content_type: str) -> dict:
+    def process_file(self, params: OCRServiceParams) -> dict:
+        pass
+
+    @abstractmethod
+    def build_params(self, file_bytes: bytes, content_type: str) -> OCRServiceParams:
         pass

@@ -3,7 +3,7 @@ from rv16_lib.architecture.base_service import BaseService
 
 from config import SrvConfig
 from providers import ProviderType
-from providers.local import LocalProvider
+from providers.local.provider import LocalProvider
 
 
 class Service(BaseService):

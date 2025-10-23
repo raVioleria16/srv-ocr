@@ -6,17 +6,21 @@ from PyPDF2 import PdfReader
 from pdf2image import convert_from_bytes
 from starlette import status
 
+from rv16_lib.srv_ocr.entities import LocalOCRServiceParams
 from rv16_lib.exceptions import RV16Exception
 
 from config import ExternalServices
 from providers.base_provider import Provider
-from providers.entities import LocalProviderConfig
+from providers.local.entities import LocalProviderConfig
 
 
 class LocalProvider(Provider):
 
     def __init__(self, provider_config: LocalProviderConfig, external_services: ExternalServices):
         self.tesseract_config = provider_config.tesseract
+
+    def build_params(self, file_bytes: bytes, content_type: str) -> LocalOCRServiceParams:
+        return LocalOCRServiceParams(file_bytes=file_bytes, content_type=content_type)
 
     def process_image(self, image_bytes: bytes) -> str:
         try:
@@ -47,19 +51,19 @@ class LocalProvider(Provider):
         except Exception as e:
             raise Exception(f"PDF processing error: {str(e)}")
 
-    def process_file(self, file_bytes: bytes, content_type: str) -> dict:
+    def process_file(self, params: LocalOCRServiceParams) -> dict:
 
-        if not (content_type.startswith('image/') or content_type == 'application/pdf'):
+        if not (params.content_type.startswith('image/') or params.content_type == 'application/pdf'):
             raise RV16Exception(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 message="Unsupported file type. Please provide an image or PDF file."
             )
 
-        if content_type.startswith('image/'):
-            text = self.process_image(file_bytes)
+        if params.content_type.startswith('image/'):
+            text = self.process_image(params.file_bytes)
             return {"text": text, "pages": 1}
-        elif content_type == 'application/pdf':
-            texts = self.process_pdf(file_bytes)
+        elif params.content_type == 'application/pdf':
+            texts = self.process_pdf(params.file_bytes)
             return {
                 "text": "\n\n".join(texts),
                 "pages": len(texts),

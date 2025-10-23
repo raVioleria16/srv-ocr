@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-from providers.entities import LocalProviderConfig
+from providers.local.entities import LocalProviderConfig
 
 class InternalServices(BaseModel):
     pass

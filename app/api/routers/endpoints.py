@@ -39,11 +39,12 @@ async def ocr(
         )
 
     try:
-        provider = srv.get_provider(provider)
-        file_content = await pdf_file.read()
+        file_bytes = await pdf_file.read()
         content_type = pdf_file.content_type
 
-        response = provider.process_file(file_content, content_type)
+        provider = srv.get_provider(provider)
+        provider_params = provider.build_params(file_bytes, content_type)
+        response = provider.process_file(provider_params)
         return response
 
     except RV16Exception as e:
