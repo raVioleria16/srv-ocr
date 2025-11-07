@@ -18,9 +18,9 @@ class LocalProvider(Provider):
 
     def __init__(self, provider_config: LocalProviderConfig, external_services: ExternalServices):
         self.tesseract_config = provider_config.tesseract
-
-    def build_params(self, file_bytes: bytes, content_type: str) -> LocalOCRServiceParams:
-        return LocalOCRServiceParams(file_bytes=file_bytes, content_type=content_type)
+    #
+    # def build_params(self, file_bytes: bytes, content_type: str) -> LocalOCRServiceParams:
+    #     return LocalOCRServiceParams(file_bytes=file_bytes, content_type=content_type)
 
     def process_image(self, image_bytes: bytes) -> str:
         try:

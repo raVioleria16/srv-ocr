@@ -3,6 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Form
 from rv16_lib.exceptions import RV16Exception
+from rv16_lib.srv_ocr.entities import OCRServiceParams
 from starlette import status
 from starlette.responses import JSONResponse
 
@@ -43,8 +44,10 @@ async def ocr(
         content_type = pdf_file.content_type
 
         provider = srv.get_provider(provider)
-        provider_params = provider.build_params(file_bytes, content_type)
-        response = provider.process_file(provider_params)
+        response = provider.process_file(params=OCRServiceParams(
+            file_bytes=file_bytes,
+            content_type=content_type)
+        ) # TODO - fare in modo che questo arrivi gia' strutturato
         return response
 
     except RV16Exception as e:

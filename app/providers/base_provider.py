@@ -21,6 +21,6 @@ class Provider(BaseProvider):
     def process_file(self, params: OCRServiceParams) -> dict:
         pass
 
-    @abstractmethod
-    def build_params(self, file_bytes: bytes, content_type: str) -> OCRServiceParams:
-        pass
+    # @abstractmethod
+    # def build_params(self, file_bytes: bytes, content_type: str) -> OCRServiceParams:
+    #     pass
